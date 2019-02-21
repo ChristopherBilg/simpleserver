@@ -1,9 +1,22 @@
+<!DOCTYPE html>
 <html>
   <head>
     <title>Chris Bilger Test Server</title>
     <meta http-equiv="Content-Type" content="text/html" charset="windows-1252">
   </head>
   <body>
-    
+    <h1 id="date"></h1>
+    <h1 id="ip"></h1>
+    <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript">
+     setInterval(function(){
+       var date = new Date();
+       document.getElementById("date").innerHTML = date;
+
+       getUserIP(function(ip){
+         document.getElementById("ip").innerHTML = ip;
+       });
+     }, 100);
+    </script>
   </body>
 </html>
