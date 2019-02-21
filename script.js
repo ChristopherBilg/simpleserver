@@ -1,4 +1,8 @@
 /**
+   This was found open-source and online.
+**/
+
+/**
  * Get the user IP throught the webkitRTCPeerConnection
  * @param onNewIP {Function} listener function to expose the IP locally
  * @return undefined
