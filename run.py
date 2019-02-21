@@ -3,11 +3,24 @@
 import http.server
 import socketserver
 
-PORT = 8080
-Handler = http.server.SimpleHTTPRequestHandler
+HOST = ""
+PORT = 8000
+HANDLER = http.server.SimpleHTTPRequestHandler
 
-with socketserver.TCPServer(("", PORT), Handler) as httpd:
-    print("serving at port", PORT)
+
+class MyTCPHandler(http.server.SimpleHTTPRequestHandler):
+    """
+    dsfds
+    """
+    def handle(self):
+        """
+        sadas
+        """
+        self.data = self.request.recv(1024).strip()
+        print(self.data)
+
+
+with socketserver.TCPServer((HOST, PORT), MyTCPHandler) as httpd:
+    print("Serving at port " + str(PORT))
     print(str(httpd.get_request()))
-    print(str(httpd.server_address))
     httpd.serve_forever()
