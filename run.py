@@ -1,26 +1,34 @@
 #!/usr/bin/env python3
 
 import http.server
-import socketserver
+import socketserver as SocketServer
+import os
 
 HOST = ""
 PORT = 8000
-HANDLER = http.server.SimpleHTTPRequestHandler
+FILENAME = "client_information.txt"
+
+if os.path.exists(FILENAME):
+    os.remove(FILENAME)
 
 
-class MyTCPHandler(http.server.SimpleHTTPRequestHandler):
+class TCPHandler(http.server.SimpleHTTPRequestHandler):
     """
-    dsfds
+    TCP Handler Class
     """
-    def handle(self):
+    def do_GET(self):
         """
-        sadas
+        Overwritten do_GET() method to respond to GET requests.
         """
-        self.data = self.request.recv(1024).strip()
-        print(self.data)
+        if self.path == "/" or self.path == "":
+            self.path = "/index.html"
+
+        with open(FILENAME, "a+") as textfile:
+            textfile.write(str(self.headers))
+
+        return http.server.SimpleHTTPRequestHandler.do_GET(self)
 
 
-with socketserver.TCPServer((HOST, PORT), MyTCPHandler) as httpd:
+with SocketServer.TCPServer((HOST, PORT), TCPHandler) as httpd:
     print("Serving at port " + str(PORT))
-    print(str(httpd.get_request()))
     httpd.serve_forever()
